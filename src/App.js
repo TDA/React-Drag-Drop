@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Dragula from 'react-dragula';
+import Container from './Container'
 
 class App extends Component {
   dragulaDecorator = (componentBackingInstance) => {
     if (componentBackingInstance) {
-      let options = { };
+      let options = {
+        revertOnSpill: true
+      };
       Dragula([componentBackingInstance], options);
     }
   };
@@ -18,14 +21,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React Drag Drop</h2>
         </div>
-        <div className='container' ref={this.dragulaDecorator}>
-          <div>Swap me around</div>
-          <div>Swap her around</div>
-          <div>Swap him around</div>
-          <div>Swap them around</div>
-          <div>Swap us around</div>
-          <div>Swap things around</div>
-          <div>Swap everything around</div>
+        <div className="cont" ref={this.dragulaDecorator}>
+          <Container />
+          <Container />
+          <Container />
         </div>
       </div>
     );

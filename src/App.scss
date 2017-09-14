@@ -1,5 +1,12 @@
+@import 'node_modules/dragula/dist/dragula';
+
 .App {
   text-align: center;
+
+  .container {
+    text-align: left;
+    outline: dashed 1px red;
+  }
 }
 
 .App-logo {
@@ -21,4 +28,17 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+
+.hidden, .editable.hidden {
+  display: none;
+}
+
+.editable {
+  display: inline-block;
+  min-width: 1em;
+  border-bottom: dashed 1px blue;
+  cursor: pointer;
+  tab-index: 1;
 }
