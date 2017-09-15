@@ -50,6 +50,11 @@ class EditableField extends Component {
       hideInputField: true,
       hideEditableField: false
     });
+
+    if (this.props.otherProps.onTextUpdate) {
+      console.log('Calling text update');
+      this.props.otherProps.onTextUpdate(e.target.value);
+    }
   }
 
   handleEditableFieldClick(e) {
@@ -90,10 +95,13 @@ class EditableField extends Component {
 
 export default class FormElements extends Component {
   render() {
+    let fields = this.props.fields;
+    let props = this.props;
     return (
       <div>
-        <EditableField fieldName="Name"/>
-        <EditableField fieldName="FFN"/>
+        {fields.map(function (name) {
+          return <EditableField fieldName={name} otherProps={props} key={name}/>
+        })}
       </div>
     );
   }
