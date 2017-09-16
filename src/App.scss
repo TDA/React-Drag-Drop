@@ -3,15 +3,25 @@
 .App {
   text-align: center;
 
-  .container {
-    text-align: left;
-    border: solid 1px black;
-    display: inline-block;
-    margin: 3em;
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    vertical-align: middle;
+  .parent-container {
+    display: flex;
+  }
+}
+
+.container {
+  text-align: left;
+  border: solid 1px black;
+  display: flex;
+  margin: 3em;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+
+
+  > div {
+    text-align: center;
+    align-self: center;
+    margin: auto;
   }
 }
 

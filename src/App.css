@@ -22,15 +22,21 @@
 
 .App {
   text-align: center; }
-  .App .container {
-    text-align: left;
-    border: solid 1px black;
-    display: inline-block;
-    margin: 3em;
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    vertical-align: middle; }
+  .App .parent-container {
+    display: flex; }
+
+.container {
+  text-align: left;
+  border: solid 1px black;
+  display: flex;
+  margin: 3em;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px; }
+  .container > div {
+    text-align: center;
+    align-self: center;
+    margin: auto; }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
