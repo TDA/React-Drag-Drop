@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './react-context-menu.css';
 import Dragula from 'react-dragula';
 import Container from './Container'
 import FormElements from "./FormElements";
@@ -9,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfQueues: props.numberOfQueues
+      numberOfQueues: props.numberOfQueues,
+      type: props.type
     }
   }
 
@@ -19,11 +21,20 @@ class App extends Component {
     });
   };
 
+  updateType = (value) => {
+    this.setState({
+      type: value
+    });
+  };
+
   dragulaDecorator = (componentBackingInstance) => {
     if (componentBackingInstance) {
       let options = {
         revertOnSpill: true,
-        direction: 'horizontal'
+        direction: 'horizontal',
+        invalid: function (el) {
+          return el.classList.contains('pre');
+        }
       };
       Dragula([componentBackingInstance], options);
     }
@@ -31,8 +42,8 @@ class App extends Component {
 
   render() {
     let containers = [];
-    for (let i = 0; i < this.state.numberOfQueues; i++) {
-      containers.push(<Container key={i}/>);
+    for (let i = 0; i < this.state.numberOfQueues && this.state.type; i++) {
+      containers.push(<Container key={i} id={"queue"+i} type={this.state.type}/>);
     }
     return (
       <div className="App">
@@ -40,7 +51,17 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React Drag Drop</h2>
         </div>
-        <FormElements fields={["Number of queues"]} onTextUpdate={this.updateNumberOfQueues}/>
+        <FormElements fields={
+          {
+            "Number of queues": {
+              onTextUpdate: this.updateNumberOfQueues
+            },
+            "Type": {
+              onTextUpdate: this.updateType
+            }
+          }
+        }
+        />
         <div className="parent-container" ref={this.dragulaDecorator}>
           {containers}
         </div>

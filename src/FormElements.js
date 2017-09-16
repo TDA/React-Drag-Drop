@@ -51,9 +51,8 @@ class EditableField extends Component {
       hideEditableField: false
     });
 
-    if (this.props.otherProps.onTextUpdate) {
-      console.log('Calling text update');
-      this.props.otherProps.onTextUpdate(e.target.value);
+    if (this.props.callbacks.onTextUpdate) {
+      this.props.callbacks.onTextUpdate(e.target.value);
     }
   }
 
@@ -95,13 +94,14 @@ class EditableField extends Component {
 
 export default class FormElements extends Component {
   render() {
-    let fields = this.props.fields;
-    let props = this.props;
+    let fieldset = this.props.fields;
+    let fields = [];
+    for (let field in fieldset) {
+      fields.push(<EditableField fieldName={field} callbacks={fieldset[field]} key={field}/>)
+    }
     return (
       <div>
-        {fields.map(function (name) {
-          return <EditableField fieldName={name} otherProps={props} key={name}/>
-        })}
+        {fields}
       </div>
     );
   }
