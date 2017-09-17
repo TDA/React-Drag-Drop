@@ -6,7 +6,7 @@ class TextField extends Component {
       <input type="text"
              name={this.props.fieldName}
              id={this.props.fieldName}
-             className={"form-control form-control-sm " + this.props.className}
+             className={this.props.className}
              onInput={this.props.onTextChange}
              onBlur={this.props.onBlur}
              onKeyDown={this.props.onKeyDown}
@@ -74,7 +74,7 @@ class EditableField extends Component {
 
   render() {
     return (
-      <div className="form-group form-inline">
+      <div>
         <label htmlFor={this.fieldName}>{this.fieldName}: </label>
         <TextField fieldName={this.fieldName}
                    onTextChange={this.handleTextChange}

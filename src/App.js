@@ -11,19 +11,37 @@ class App extends Component {
     super(props);
     this.state = {
       numberOfQueues: props.numberOfQueues,
-      type: props.type
+      type: props.type,
+      selectableFields: new Array(props.numberOfQueues).fill(false)
     }
   }
 
   updateNumberOfQueues = (value) => {
     this.setState({
-      numberOfQueues: value
+      numberOfQueues: value,
+      selectableFields: new Array(Number.parseInt(value, 10)).fill(false)
     });
   };
 
   updateType = (value) => {
     this.setState({
       type: value
+    });
+  };
+
+  updateSelectableFields = (index, order) => {
+    let selectableFields = this.state.selectableFields.slice();
+    if (order === 'escalate') {
+      console.log('esc', index);
+      selectableFields = selectableFields.map((v, i) => {
+        console.log(i);return i > index; });
+    } else if (order === 'deEscalate') {
+      console.log('deEsc', index);
+      selectableFields = selectableFields.map((v, i) => { return i < index; });
+    }
+    console.log(selectableFields);
+    this.setState({
+      selectableFields: selectableFields
     });
   };
 
@@ -43,7 +61,7 @@ class App extends Component {
   render() {
     let containers = [];
     for (let i = 0; i < this.state.numberOfQueues && this.state.type; i++) {
-      containers.push(<Container key={i} id={"queue"+i} type={this.state.type}/>);
+      containers.push(<Container key={i} index={i} id={"queue"+i} type={this.state.type} selectable={this.state.selectableFields[i]} updateSelectableFields={this.updateSelectableFields}/>);
     }
     return (
       <div className="App">

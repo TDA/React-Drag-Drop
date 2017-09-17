@@ -20,6 +20,9 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20); }
 
+html {
+  font-size: 14px; }
+
 .App {
   text-align: center; }
   .App .parent-container {
@@ -33,6 +36,8 @@
   border-radius: 50%;
   height: 200px;
   width: 200px; }
+  .container.selectable {
+    outline: dashed blue 1px; }
   .container > div {
     text-align: center;
     align-self: center;
@@ -72,5 +77,3 @@
   border: dashed 1px saddlebrown;
   margin: 1em;
   background-color: #efefef; }
-  .pre button {
-    margin: auto; }

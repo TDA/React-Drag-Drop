@@ -12,8 +12,8 @@ class Container extends Component {
       name: '',
       ffn: '',
       type: props.type,
-      escalationQueues: [],
-      deEscalationQueues: []
+      escalationQueues: this.props.escalationQueues || [],
+      deEscalationQueues: this.props.deEscalationQueues || []
     }
   }
 
@@ -21,12 +21,12 @@ class Container extends Component {
     console.log(data);
   }
 
-  updateEscalationQueues = () => {
-    console.log(this);
+  showEscalationQueues = () => {
+    this.props.updateSelectableFields(this.props.index, 'escalate');
   };
 
-  updateDeEscalationQueues = () => {
-    console.log(this);
+  showDeEscalationQueues = () => {
+    this.props.updateSelectableFields(this.props.index, 'deEscalate');
   };
 
   updateName = (value) => {
@@ -41,21 +41,15 @@ class Container extends Component {
     });
   };
 
-  getCurrentState = () => {
-    return {
-      name: this.state.name,
-      ffn: this.state.ffn,
-      type: this.state.type,
-      escalationQueues: this.state.escalationQueues,
-      deEscalationQueues: this.state.deEscalationQueues
-    };
+  isSelectable = (value) => {
+    return value ? 'selectable': '';
   };
 
   render() {
     return (
       <div>
         <ContextMenuTrigger id={this.props.id}>
-          <div className='container'>
+          <div className={'container ' + this.isSelectable(this.props.selectable)} ondblclick={this.linkStates}>
             <FormElements fields={
               {
                 "Name": {
@@ -70,14 +64,14 @@ class Container extends Component {
         </ContextMenuTrigger>
 
         <ContextMenu id={this.props.id}>
-          <MenuItem data={ {"some_data": this.props} } onClick={this.updateEscalationQueues}>
+          <MenuItem data={ {"some_data": this.props} } onClick={this.showEscalationQueues}>
             Create Escalation Link
           </MenuItem>
-          <MenuItem data={ {"some_data": this.props} } onClick={this.updateDeEscalationQueues}>
+          <MenuItem data={ {"some_data": this.props} } onClick={this.showDeEscalationQueues}>
             Create De-escalation Link
           </MenuItem>
         </ContextMenu>
-        <JsonOutput value={this.getCurrentState()}/>
+        <JsonOutput value={this.state}/>
       </div>
     );
   }
