@@ -37,7 +37,7 @@ html {
   height: 200px;
   width: 200px; }
   .container.selectable {
-    outline: dashed blue 1px; }
+    outline: dashed green 1px; }
   .container > div {
     text-align: center;
     align-self: center;

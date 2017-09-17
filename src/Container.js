@@ -22,11 +22,11 @@ class Container extends Component {
   }
 
   showEscalationQueues = () => {
-    this.props.updateSelectableFields(this.props.index, 'escalate');
+    this.props.updateSelectableFields(this.props.index, 'escalationQueues');
   };
 
   showDeEscalationQueues = () => {
-    this.props.updateSelectableFields(this.props.index, 'deEscalate');
+    this.props.updateSelectableFields(this.props.index, 'deEscalationQueues');
   };
 
   updateName = (value) => {
@@ -45,11 +45,17 @@ class Container extends Component {
     return value ? 'selectable': '';
   };
 
+  createLink = () => {
+    if (this.props.selectable) {
+      this.props.createLink(this.state.ffn);
+    }
+  };
+
   render() {
     return (
       <div>
         <ContextMenuTrigger id={this.props.id}>
-          <div className={'container ' + this.isSelectable(this.props.selectable)} ondblclick={this.linkStates}>
+          <div className={'container ' + this.isSelectable(this.props.selectable)} onDoubleClick={this.createLink}>
             <FormElements fields={
               {
                 "Name": {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './react-context-menu.css';
-import Dragula from 'react-dragula';
+// import Dragula from 'react-dragula';
 import Container from './Container'
 import FormElements from "./FormElements";
 
@@ -12,14 +12,21 @@ class App extends Component {
     this.state = {
       numberOfQueues: props.numberOfQueues,
       type: props.type,
-      selectableFields: new Array(props.numberOfQueues).fill(false)
+      selectableFields: new Array(props.numberOfQueues).fill(false),
+      currentSelectedContainer: null,
+      currentSelectedAction: null,
     }
   }
 
   updateNumberOfQueues = (value) => {
+    value = Number.parseInt(value, 10);
     this.setState({
       numberOfQueues: value,
-      selectableFields: new Array(Number.parseInt(value, 10)).fill(false)
+      selectableFields: new Array(value).fill(false),
+      escDeEscMap: new Array(value).fill({
+        escalationQueues: [],
+        deEscalationQueues: []
+      })
     });
   };
 
@@ -31,43 +38,65 @@ class App extends Component {
 
   updateSelectableFields = (index, order) => {
     let selectableFields = this.state.selectableFields.slice();
-    if (order === 'escalate') {
-      console.log('esc', index);
-      selectableFields = selectableFields.map((v, i) => {
-        console.log(i);return i > index; });
-    } else if (order === 'deEscalate') {
-      console.log('deEsc', index);
+    if (order === 'escalationQueues') {
+      selectableFields = selectableFields.map((v, i) => { return i > index; });
+    } else if (order === 'deEscalationQueues') {
       selectableFields = selectableFields.map((v, i) => { return i < index; });
     }
-    console.log(selectableFields);
     this.setState({
-      selectableFields: selectableFields
+      selectableFields: selectableFields,
+      currentSelectedContainer: index,
+      currentSelectedAction: order
     });
+  };
+
+  createLink = (ffn) => {
+    let selectableFields = this.state.selectableFields.slice();
+    let escDeEscMap = this.state.escDeEscMap.map(a => Object.assign({}, a));
+    escDeEscMap[this.state.currentSelectedContainer][this.state.currentSelectedAction].push(ffn);
+    this.setState({
+      escDeEscMap: escDeEscMap,
+      selectableFields: selectableFields.fill(false)
+    });
+  };
+
+  getEscalationLinks = () => {
+    // let escDeEscMap = this.state.escDeEscMap.map(function(arr) { return arr.slice(); });
   };
 
   dragulaDecorator = (componentBackingInstance) => {
     if (componentBackingInstance) {
-      let options = {
-        revertOnSpill: true,
-        direction: 'horizontal',
-        invalid: function (el) {
-          return el.classList.contains('pre');
-        }
-      };
-      Dragula([componentBackingInstance], options);
+      // let options = {
+      //   revertOnSpill: true,
+      //   direction: 'horizontal',
+      //   invalid: function (el) {
+      //     return el.classList.contains('pre');
+      //   }
+      // };
+      // Dragula([componentBackingInstance], options);
     }
   };
 
   render() {
     let containers = [];
     for (let i = 0; i < this.state.numberOfQueues && this.state.type; i++) {
-      containers.push(<Container key={i} index={i} id={"queue"+i} type={this.state.type} selectable={this.state.selectableFields[i]} updateSelectableFields={this.updateSelectableFields}/>);
+      containers.push(<Container key={i}
+                                 index={i}
+                                 id={"queue"+i}
+                                 type={this.state.type}
+                                 selectable={this.state.selectableFields[i]}
+                                 updateSelectableFields={this.updateSelectableFields}
+                                 createLink={this.createLink}
+                                 escalationQueues={this.state.escDeEscMap[i].escalationQueues}
+                                 deEscalationQueues={this.state.escDeEscMap[i].deEscalationQueues}
+        />
+      );
     }
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React Drag Drop</h2>
+          <h2>Setup</h2>
         </div>
         <FormElements fields={
           {
@@ -80,7 +109,7 @@ class App extends Component {
           }
         }
         />
-        <div className="parent-container" ref={this.dragulaDecorator}>
+        <div className="parent-container" >
           {containers}
         </div>
       </div>
