@@ -6,6 +6,11 @@ import './react-context-menu.css';
 import Container from './Container'
 import FormElements from "./FormElements";
 
+function EscDeEscObject() {
+  this.escalationQueues = [];
+  this.deEscalationQueues = [];
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,13 +25,14 @@ class App extends Component {
 
   updateNumberOfQueues = (value) => {
     value = Number.parseInt(value, 10);
+    let escDeEscMap = new Array(value).fill('');
+    escDeEscMap = escDeEscMap.map(function () {
+      return new EscDeEscObject();
+    });
     this.setState({
       numberOfQueues: value,
       selectableFields: new Array(value).fill(false),
-      escDeEscMap: new Array(value).fill({
-        escalationQueues: [],
-        deEscalationQueues: []
-      })
+      escDeEscMap: escDeEscMap
     });
   };
 
@@ -58,10 +64,6 @@ class App extends Component {
       escDeEscMap: escDeEscMap,
       selectableFields: selectableFields.fill(false)
     });
-  };
-
-  getEscalationLinks = () => {
-    // let escDeEscMap = this.state.escDeEscMap.map(function(arr) { return arr.slice(); });
   };
 
   dragulaDecorator = (componentBackingInstance) => {
