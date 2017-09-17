@@ -72,3 +72,5 @@
   border: dashed 1px saddlebrown;
   margin: 1em;
   background-color: #efefef; }
+  .pre button {
+    margin: auto; }

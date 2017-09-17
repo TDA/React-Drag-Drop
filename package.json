@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "4.0.0-beta",
+    "jquery": "3.2.1",
     "node-sass-chokidar": "0.0.3",
+    "popper.js": "1.12.5",
     "react": "15.6.1",
+    "react-bootstrap": "0.31.3",
     "react-contextmenu": "2.7.0",
     "react-copy-to-clipboard": "5.0.0",
     "react-dom": "^15.6.1",

@@ -6,7 +6,7 @@ class TextField extends Component {
       <input type="text"
              name={this.props.fieldName}
              id={this.props.fieldName}
-             className={this.props.className}
+             className={"form-control form-control-sm " + this.props.className}
              onInput={this.props.onTextChange}
              onBlur={this.props.onBlur}
              onKeyDown={this.props.onKeyDown}
@@ -22,8 +22,8 @@ class SpanField extends Component {
             className={"editable " + this.props.className}
             onClick={this.props.onEditableFieldClick}
       >
-          {this.props.fieldValue}
-        </span>
+        {this.props.fieldValue}
+      </span>
     );
   }
 }
@@ -74,7 +74,7 @@ class EditableField extends Component {
 
   render() {
     return (
-      <div>
+      <div className="form-group form-inline">
         <label htmlFor={this.fieldName}>{this.fieldName}: </label>
         <TextField fieldName={this.fieldName}
                    onTextChange={this.handleTextChange}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import './App.css';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
@@ -19,7 +20,7 @@ class JsonOutput extends Component {
         </pre>
 
         <CopyToClipboard text={value} onCopy={() => this.setState({copied: true})}>
-          <button>Copy to clipboard</button>
+          <Button>Copy to clipboard</Button>
         </CopyToClipboard>
 
         {this.state.copied ? <span style={{color: 'red'}}>Copied</span> : null}
