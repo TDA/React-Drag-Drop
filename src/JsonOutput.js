@@ -20,7 +20,7 @@ class JsonOutput extends Component {
         </pre>
 
         <CopyToClipboard text={value} onCopy={() => this.setState({copied: true})}>
-          <Button>Copy to clipboard</Button>
+          <Button tabIndex="5">Copy to clipboard</Button>
         </CopyToClipboard>
 
         {this.state.copied ? <span style={{color: 'red'}}>Copied</span> : null}

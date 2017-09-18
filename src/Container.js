@@ -9,11 +9,15 @@ class Container extends Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      name: '',
-      ffn: '',
-      type: props.type,
-      escalationQueues: this.props.escalationQueues || [],
-      deEscalationQueues: this.props.deEscalationQueues || []
+      displayName: '',
+      id: '',
+      type: '',
+      allowedCaseTypes: props.allowedCaseTypes || [],
+      escalation: this.props.escalation || [],
+      deEscalation: this.props.deEscalation || [],
+      SLA: {
+        SLA_day: 30
+      }
     }
   }
 
@@ -22,22 +26,32 @@ class Container extends Component {
   }
 
   showEscalationQueues = () => {
-    this.props.updateSelectableFields(this.props.index, 'escalationQueues');
+    this.props.updateSelectableFields(this.props.index, 'escalation');
   };
 
   showDeEscalationQueues = () => {
-    this.props.updateSelectableFields(this.props.index, 'deEscalationQueues');
+    this.props.updateSelectableFields(this.props.index, 'deEscalation');
   };
 
   updateName = (value) => {
     this.setState({
-      name: value
+      displayName: value
     });
   };
 
-  updateFFN = (value) => {
+  updateFQRN = (value) => {
     this.setState({
-      ffn: value
+      id: value.slice(0, -4),
+      type: value
+    });
+  };
+
+  updateSLA = (value) => {
+    let SLA = {
+      SLA_day: value
+    };
+    this.setState({
+      SLA: SLA
     });
   };
 
@@ -47,7 +61,7 @@ class Container extends Component {
 
   createLink = () => {
     if (this.props.selectable) {
-      this.props.createLink(this.state.ffn);
+      this.props.createLink(this.state.id);
     }
   };
 
@@ -58,11 +72,14 @@ class Container extends Component {
           <div className={'container ' + this.isSelectable(this.props.selectable)} onDoubleClick={this.createLink}>
             <FormElements fields={
               {
-                "Name": {
+                "Display Name": {
                   onTextUpdate: this.updateName
                 },
-                "FFN": {
-                  onTextUpdate: this.updateFFN
+                "FQRN": {
+                  onTextUpdate: this.updateFQRN
+                },
+                "SLA": {
+                  onTextUpdate: this.updateSLA
                 }
               }
             }/>

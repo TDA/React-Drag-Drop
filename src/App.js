@@ -7,8 +7,8 @@ import Container from './Container'
 import FormElements from "./FormElements";
 
 function EscDeEscObject() {
-  this.escalationQueues = [];
-  this.deEscalationQueues = [];
+  this.escalation = [];
+  this.deEscalation = [];
 }
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
     super(props);
     this.state = {
       numberOfQueues: props.numberOfQueues,
-      type: props.type,
+      allowedCaseTypes: props.allowedCaseTypes,
       selectableFields: new Array(props.numberOfQueues).fill(false),
       currentSelectedContainer: null,
       currentSelectedAction: null,
@@ -37,16 +37,17 @@ class App extends Component {
   };
 
   updateType = (value) => {
+    value = value.split(",");
     this.setState({
-      type: value
+      allowedCaseTypes: value
     });
   };
 
   updateSelectableFields = (index, order) => {
     let selectableFields = this.state.selectableFields.slice();
-    if (order === 'escalationQueues') {
+    if (order === 'escalation') {
       selectableFields = selectableFields.map((v, i) => { return i > index; });
-    } else if (order === 'deEscalationQueues') {
+    } else if (order === 'deEscalation') {
       selectableFields = selectableFields.map((v, i) => { return i < index; });
     }
     this.setState({
@@ -81,16 +82,16 @@ class App extends Component {
 
   render() {
     let containers = [];
-    for (let i = 0; i < this.state.numberOfQueues && this.state.type; i++) {
+    for (let i = 0; i < this.state.numberOfQueues && this.state.allowedCaseTypes; i++) {
       containers.push(<Container key={i}
                                  index={i}
                                  id={"queue"+i}
-                                 type={this.state.type}
+                                 allowedCaseTypes={this.state.allowedCaseTypes}
                                  selectable={this.state.selectableFields[i]}
                                  updateSelectableFields={this.updateSelectableFields}
                                  createLink={this.createLink}
-                                 escalationQueues={this.state.escDeEscMap[i].escalationQueues}
-                                 deEscalationQueues={this.state.escDeEscMap[i].deEscalationQueues}
+                                 escalation={this.state.escDeEscMap[i].escalation}
+                                 deEscalation={this.state.escDeEscMap[i].deEscalation}
         />
       );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FormControl } from 'react-bootstrap';
 
 class TextField extends Component {
   render() {
@@ -10,6 +11,7 @@ class TextField extends Component {
              onInput={this.props.onTextChange}
              onBlur={this.props.onBlur}
              onKeyDown={this.props.onKeyDown}
+             tabIndex={1}
       />
     );
   }
@@ -18,12 +20,12 @@ class TextField extends Component {
 class SpanField extends Component {
   render() {
     return (
-      <span id={this.props.fieldName}
+      <FormControl.Static id={this.props.fieldName}
             className={"editable " + this.props.className}
             onClick={this.props.onEditableFieldClick}
       >
         {this.props.fieldValue}
-      </span>
+      </FormControl.Static>
     );
   }
 }
