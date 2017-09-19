@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import './react-context-menu.css';
 // import Dragula from 'react-dragula';
-import Container from './Container'
+import QueuesContainer from './QueuesContainer'
 import FormElements from "./FormElements";
 
 function EscDeEscObject() {
@@ -20,6 +20,7 @@ class App extends Component {
       selectableFields: new Array(props.numberOfQueues).fill(false),
       currentSelectedContainer: null,
       currentSelectedAction: null,
+      tenant: null
     }
   }
 
@@ -40,6 +41,12 @@ class App extends Component {
     value = value.split(",");
     this.setState({
       allowedCaseTypes: value
+    });
+  };
+
+  updateTenant = (value) => {
+    this.setState({
+      tenant: value
     });
   };
 
@@ -67,31 +74,19 @@ class App extends Component {
     });
   };
 
-  dragulaDecorator = (componentBackingInstance) => {
-    if (componentBackingInstance) {
-      // let options = {
-      //   revertOnSpill: true,
-      //   direction: 'horizontal',
-      //   invalid: function (el) {
-      //     return el.classList.contains('pre');
-      //   }
-      // };
-      // Dragula([componentBackingInstance], options);
-    }
-  };
-
   render() {
     let containers = [];
-    for (let i = 0; i < this.state.numberOfQueues && this.state.allowedCaseTypes; i++) {
-      containers.push(<Container key={i}
-                                 index={i}
-                                 id={"queue"+i}
-                                 allowedCaseTypes={this.state.allowedCaseTypes}
-                                 selectable={this.state.selectableFields[i]}
-                                 updateSelectableFields={this.updateSelectableFields}
-                                 createLink={this.createLink}
-                                 escalation={this.state.escDeEscMap[i].escalation}
-                                 deEscalation={this.state.escDeEscMap[i].deEscalation}
+    for (let i = 0; i < this.state.numberOfQueues && this.state.allowedCaseTypes && this.state.tenant; i++) {
+      containers.push(<QueuesContainer key={i}
+                                       index={i}
+                                       id={"queue"+i}
+                                       allowedCaseTypes={this.state.allowedCaseTypes}
+                                       tenant={this.state.tenant}
+                                       selectable={this.state.selectableFields[i]}
+                                       updateSelectableFields={this.updateSelectableFields}
+                                       createLink={this.createLink}
+                                       escalation={this.state.escDeEscMap[i].escalation}
+                                       deEscalation={this.state.escDeEscMap[i].deEscalation}
         />
       );
     }
@@ -103,6 +98,9 @@ class App extends Component {
         </div>
         <FormElements fields={
           {
+            "Tenant": {
+              onTextUpdate: this.updateTenant
+            },
             "Number of queues": {
               onTextUpdate: this.updateNumberOfQueues
             },

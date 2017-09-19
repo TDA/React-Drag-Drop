@@ -4,7 +4,7 @@ import FormElements from './FormElements'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import JsonOutput from './JsonOutput';
 
-class Container extends Component {
+class QueuesContainer extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -100,4 +100,4 @@ class Container extends Component {
   }
 }
 
-export default Container;
+export default QueuesContainer;
