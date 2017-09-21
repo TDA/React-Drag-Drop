@@ -12,9 +12,10 @@ class QueuesContainer extends Component {
       displayName: '',
       id: '',
       type: '',
+      tenant: props.tenant || '',
       allowedCaseTypes: props.allowedCaseTypes || [],
-      escalation: this.props.escalation || [],
-      deEscalation: this.props.deEscalation || [],
+      escalation: props.escalation || [],
+      deEscalation: props.deEscalation || [],
       SLA: {
         SLA_day: 30
       }
@@ -65,6 +66,12 @@ class QueuesContainer extends Component {
     }
   };
 
+  getJsonState = () => {
+    let state = Object.assign({}, this.state);
+    delete state.tenant;
+    return state;
+  };
+
   render() {
     return (
       <div>
@@ -76,7 +83,8 @@ class QueuesContainer extends Component {
                   onTextUpdate: this.updateName
                 },
                 "FQRN": {
-                  onTextUpdate: this.updateFQRN
+                  onTextUpdate: this.updateFQRN,
+                  defaultValue: `n.q.${this.state.tenant}.`
                 },
                 "SLA": {
                   onTextUpdate: this.updateSLA
@@ -94,7 +102,7 @@ class QueuesContainer extends Component {
             Create De-escalation Link
           </MenuItem>
         </ContextMenu>
-        <JsonOutput value={this.state}/>
+        <JsonOutput value={this.getJsonState()}/>
       </div>
     );
   }

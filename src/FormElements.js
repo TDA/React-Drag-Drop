@@ -12,6 +12,7 @@ class TextField extends Component {
              onBlur={this.props.onBlur}
              onKeyDown={this.props.onKeyDown}
              tabIndex={1}
+             defaultValue={this.props.value}
       />
     );
   }
@@ -39,7 +40,8 @@ class EditableField extends Component {
     this.handleEditableFieldClick = this.handleEditableFieldClick.bind(this);
     this.state = {
       hideInputField: false,
-      hideEditableField: true
+      hideEditableField: true,
+      fieldValue: props.callbacks.defaultValue
     };
   }
 
@@ -83,6 +85,7 @@ class EditableField extends Component {
                    onBlur={this.handleInputFieldBlur}
                    onKeyDown={this.keyDown}
                    className={this.setHiddenState(this.state.hideInputField)}
+                   value={this.state.fieldValue}
         />
         <SpanField fieldName={this.fieldName + "Editable"}
                    fieldValue={this.state.fieldValue}
