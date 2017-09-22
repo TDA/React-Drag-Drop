@@ -93,7 +93,9 @@ class QueuesContainer extends Component {
             }/>
           </div>
         </ContextMenuTrigger>
-
+        <div className="file-path">
+          File path: {this.state.id.split('.').join('/') + '/configuration.json'}
+        </div>
         <ContextMenu id={this.props.id}>
           <MenuItem data={ {"some_data": this.props} } onClick={this.showEscalationQueues}>
             Create Escalation Link
