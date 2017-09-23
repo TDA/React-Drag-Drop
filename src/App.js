@@ -5,6 +5,7 @@ import './react-context-menu.css';
 // import Dragula from 'react-dragula';
 import QueuesContainer from './QueuesContainer'
 import FormElements from "./FormElements";
+import DVTCGenerator from "./DVTCGenerator"
 
 function EscDeEscObject() {
   this.escalation = [];
@@ -113,6 +114,9 @@ class App extends Component {
         <div className="parent-container" >
           {containers}
         </div>
+        <DVTCGenerator>
+
+        </DVTCGenerator>
       </div>
     );
   }
