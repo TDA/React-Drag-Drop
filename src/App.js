@@ -97,26 +97,35 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Setup</h2>
         </div>
-        <FormElements fields={
-          {
-            "Tenant": {
-              onTextUpdate: this.updateTenant
-            },
-            "Number of queues": {
-              onTextUpdate: this.updateNumberOfQueues
-            },
-            "Type": {
-              onTextUpdate: this.updateType
+        <div className="step one">
+          <FormElements fields={
+              {
+                "Tenant": {
+                  onTextUpdate: this.updateTenant
+                },
+                "Number of queues": {
+                  onTextUpdate: this.updateNumberOfQueues
+                },
+                "Type": {
+                  onTextUpdate: this.updateType
+                }
+              }
             }
-          }
-        }
-        />
-        <div className="parent-container" >
+          />
+        </div>
+        <div className="parent-container step two" >
           {containers}
         </div>
-        <DVTCGenerator>
+        <div className="step three">
+          <DVTCGenerator>
 
-        </DVTCGenerator>
+          </DVTCGenerator>
+        </div>
+        <div className="step four">
+          <ResourceSchemaGenerator>
+
+          </ResourceSchemaGenerator>
+        </div>
       </div>
     );
   }
