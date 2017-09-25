@@ -98,6 +98,10 @@ class App extends Component {
           <h2>Setup</h2>
         </div>
         <div className="step one">
+          {/* TODO: This step needs to do a couple more things
+          1. It needs to do the esc/de-esc logic we have hardcoded in NW
+          2. It needs to update tenant.rb?
+          3. It needs to place in Action Configs and update RAL */}
           <FormElements fields={
               {
                 "Tenant": {
